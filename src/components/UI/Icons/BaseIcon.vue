@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue'
 
-type IconCollection = 'heart' | 'heart-fill'
+type IconCollection = 'heart' | 'heart-fill' | 'x-lg'
 
 defineProps<{
   icon: IconCollection
@@ -9,7 +9,8 @@ defineProps<{
 
 const iconCollection: Record<IconCollection, ReturnType<typeof defineAsyncComponent>> = {
   'heart': defineAsyncComponent(() => import('@/components/UI/Icons/IconHeart.vue')),
-  'heart-fill': defineAsyncComponent(() => import('@/components/UI/Icons/IconHeartFill.vue'))
+  'heart-fill': defineAsyncComponent(() => import('@/components/UI/Icons/IconHeartFill.vue')),
+  'x-lg': defineAsyncComponent(() => import('./IconXLg.vue'))
 }
 
 </script>

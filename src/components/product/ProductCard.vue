@@ -20,7 +20,7 @@ const likeIcon = computed(() => props.isFavorite ? 'heart-fill' : 'heart')
       <BaseIcon :icon="likeIcon"/>
     </BaseButton>
     <BaseButton class="absolute bottom-4 right-4">Buy</BaseButton>
-    <img class="object-cover w-[100%] h-48" :src="product.thumbnail" :alt="product.title"/>
+    <img class="object-contain w-[100%] h-48" :src="product.thumbnail" :alt="product.title"/>
     <div class="p-4 space-y-2">
       <!--      TODO: max 2 lines and truncate-->
       <p class="truncate">{{product.title}}</p>

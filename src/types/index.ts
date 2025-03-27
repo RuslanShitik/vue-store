@@ -1,10 +1,4 @@
-type Product = {
-  id: number
-  title: string
-  price: number
-  thumbnail: string
-}
+export * from './product.ts'
+export * from './pagination.ts'
+export * from './fetchParams.ts'
 
-export type {
-  Product
-}
