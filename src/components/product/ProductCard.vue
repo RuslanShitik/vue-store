@@ -10,6 +10,11 @@ const props = defineProps<{
   isFavorite?: boolean
 }>()
 
+defineEmits<{
+  (e: 'clickCart'): void,
+  (e: 'clickFavorite'): void
+}>()
+
 const likeIcon = computed(() => props.isFavorite ? 'heart-fill' : 'heart')
 
 </script>

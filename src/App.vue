@@ -1,20 +1,28 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import BaseDrawer from '@/components/UI/BaseDrawer.vue'
+import { useToggle } from '@vueuse/core'
+
+const [isOpen, toggle] = useToggle()
+</script>
 
 <template>
-  <div class="bg-sky-200 py-16 min-h-[100vh]">
+  <div class="bg-sky-200 px-2 py-16 min-h-[100vh]">
     <div class="bg-white rounded-2xl container mx-auto">
       <header class="border-b border-gray-200 p-8 flex justify-between">
         <div class="flex gap-4">
-          <img class="size-12" src="@/assets/logo.svg" alt="logo" />
+          <RouterLink to="/">
+            <img class="size-12" src="@/assets/logo.svg" alt="logo" />
+          </RouterLink>
           <div class="flex flex-col justify-between">
             <p class="text-xl font-bold">Shop name</p>
             <p class="text-sm text-gray-400">The best shop!</p>
           </div>
         </div>
-        <div class="flex text-gray-400 items-center gap-4">
-          <p>Cart</p>
-          <p>Favorite</p>
-          <p>Profile</p>
+        <div class="flex text-gray-400 items-center gap-4 underline">
+          <BaseDrawer v-model="isOpen"> Drawer </BaseDrawer>
+          <button @click="toggle()">Cart</button>
+          <RouterLink to="/favorite">Favorite</RouterLink>
+          <RouterLink to="/profile">Profile</RouterLink>
           <!--          TODO: links, icons-->
         </div>
       </header>

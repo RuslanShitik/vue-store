@@ -1,4 +1,4 @@
-type Ordering = 'asc' | 'desc'
+export type Ordering = 'asc' | 'desc'
 
 export type PaginationParams = {
   limit?: number

@@ -1,7 +1,7 @@
 import dummyjson from '@/plugins/dummyjson.ts'
 import type { PaginationParams, Product, SortParams, WithPagination } from '@/types'
 
-type SearchProductsParams = {
+export type SearchProductsParams = {
   q?: string
 } & SortParams & PaginationParams
 
