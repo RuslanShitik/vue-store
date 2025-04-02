@@ -14,6 +14,7 @@ import ProductLargeSlider from '@/components/product/ProductLargeSlider.vue'
 import { useCartStore } from '@/store/cart.ts'
 import { storeToRefs } from 'pinia'
 import { useFavoriteProductsStore } from '@/store/favoriteProducts.ts'
+import debounce from '@/utils/debounce.ts'
 
 const sortByOptions = [
   {
@@ -104,15 +105,24 @@ const handleClickCart = (product: Product) => {
   }
 }
 
+const debouncedExecute = debounce(execute, 500)
+
 watch(
-  searchParams,
-  (val) => {
-    execute(0, val)
+  [
+    () => searchParams.q,
+    () => searchParams.skip,
+    () => searchParams.order,
+    () => searchParams.sortBy,
+  ],
+  ([q, skip, order, sortBy], [oldQ]) => {
+    if (q !== oldQ) {
+      debouncedExecute(0, { q, skip, order, sortBy })
+    } else {
+      execute(0, { q, skip, order, sortBy })
+    }
   },
   { immediate: true },
 )
-
-// TODO: add debounce
 </script>
 
 <template>
@@ -154,7 +164,6 @@ watch(
           <BaseButton :disabled="!hasNextPage" @click="handleNextPage"> Next page</BaseButton>
         </template>
       </div>
-      <!--    TODO: Pagination-->
     </BaseContentView>
   </div>
 </template>

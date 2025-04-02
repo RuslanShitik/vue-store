@@ -1,6 +1,3 @@
-<script setup lang="ts">
-// TODO: size, color
-</script>
 
 <template>
   <button

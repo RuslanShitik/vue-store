@@ -4,6 +4,8 @@ import { useToggle } from '@vueuse/core'
 import ProductCard from '@/components/product/ProductCard.vue'
 import { useCartStore } from '@/store/cart.ts'
 import { storeToRefs } from 'pinia'
+import MessageEmpty from '@/components/UI/MessageEmpty.vue'
+import BaseIcon from '@/components/UI/Icons/BaseIcon.vue'
 
 const [isOpen, toggle] = useToggle()
 
@@ -25,11 +27,11 @@ const handleClickCart = (id: number) => {
             <img class="size-12" src="@/assets/logo.svg" alt="logo" />
           </RouterLink>
           <div class="flex flex-col justify-between">
-            <p class="text-xl font-bold">Shop name</p>
+            <p class="text-xl font-bold">Vue-store</p>
             <p class="text-sm text-gray-400">The best shop!</p>
           </div>
         </div>
-        <div class="flex text-gray-400 items-center gap-4 underline">
+        <div class="flex text-gray-400 items-center gap-4">
           <BaseDrawer v-model="isOpen">
             <template #title>
               <p class="text-2xl">Your cart</p>
@@ -44,16 +46,14 @@ const handleClickCart = (id: number) => {
                   @click-cart="handleClickCart(product.id)"
                 />
               </div>
-              <p v-else>Your cart is empty :(</p>
+              <MessageEmpty v-else/>
             </template>
             <template #footer>
               <p>footer</p>
             </template>
           </BaseDrawer>
-          <button @click="toggle()">Cart</button>
-          <RouterLink to="/favorite">Favorite</RouterLink>
-          <RouterLink to="/profile">Profile</RouterLink>
-          <!--          TODO: links, icons-->
+          <button class="cursor-pointer" @click="toggle()">Cart <BaseIcon icon="cart-check"/></button>
+          <RouterLink exactActiveClass="text-green-600 font-bold" to="/favorite">Favorite <BaseIcon icon="heart"/></RouterLink>
         </div>
       </header>
 
@@ -74,24 +74,3 @@ const handleClickCart = (id: number) => {
 </template>
 
 <style scoped></style>
-
-<!--
-
-  <Layout>
-    <Header>
-    </Header>
-
-    <RouterView>
-      <Page>
-        <NewsSlider/>
-        <BaseContentView>
-          <ProductsGrid/>
-        </BaseContentView>
-      </Page>
-    </RouterView>
-
-    <Footer>
-    </Footer>
-  </Layout>
-
--->

@@ -30,7 +30,6 @@ const cartIcon = computed(() => props.isInCart ? 'cart-dash-fill' : 'cart-check'
     </BaseButton>
     <img class="object-contain w-[100%] h-48" :src="product.thumbnail" :alt="product.title"/>
     <div class="p-4 space-y-2">
-      <!--      TODO: max 2 lines and truncate-->
       <p class="truncate">{{product.title}}</p>
       <div>
         <p class="text-sm text-gray-400">Price:</p>

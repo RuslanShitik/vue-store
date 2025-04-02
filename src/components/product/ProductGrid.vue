@@ -3,7 +3,7 @@
 import ProductCard from '@/components/product/ProductCard.vue'
 import ProductCardSkeleton from '@/components/product/ProductCardSkeleton.vue'
 import type { Product } from '@/types'
-import BaseIcon from '@/components/UI/Icons/BaseIcon.vue'
+import MessageEmpty from '@/components/UI/MessageEmpty.vue'
 
 defineProps<{
   isLoading?: boolean;
@@ -34,12 +34,7 @@ defineEmits<{
       />
     </template>
   </div>
-
-<!--  TODO: make pretty empty-->
-  <div class="my-12 flex flex-col items-center" v-else>
-    <BaseIcon icon="ban"/>
-    <p>There is nothing :(</p>
-  </div>
+  <MessageEmpty v-else/>
 </template>
 
 <style scoped>
