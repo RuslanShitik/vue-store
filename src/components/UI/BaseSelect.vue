@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const model = defineModel()
 defineProps<{
-  options: {label: string, value: string | number}[]
+  options: { label: string; value: string | number }[]
   placeholder?: string
 }>()
 </script>
@@ -12,11 +12,9 @@ defineProps<{
     v-model="model"
   >
     <option v-for="option in options" :key="option.value" :value="option.value">
-      {{option.label}}
+      {{ option.label }}
     </option>
   </select>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

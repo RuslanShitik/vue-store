@@ -7,7 +7,7 @@ import BaseIcon from '@/components/UI/Icons/BaseIcon.vue'
 
 defineProps<{
   isLoading?: boolean;
-  products: Product[];
+  products: Array<Product & {isInCart?: boolean, isFavorite?: boolean}>;
 }>()
 
 defineEmits<{
@@ -27,6 +27,8 @@ defineEmits<{
         v-for="product in products"
         :key="product.id"
         :product="product"
+        :is-in-cart="product.isInCart"
+        :is-favorite="product.isFavorite"
         @click-cart="$emit('clickCart', product)"
         @click-favorite="$emit('clickFavorite', product)"
       />

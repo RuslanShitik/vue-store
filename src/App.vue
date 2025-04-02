@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import BaseDrawer from '@/components/UI/BaseDrawer.vue'
 import { useToggle } from '@vueuse/core'
+import ProductCard from '@/components/product/ProductCard.vue'
+import useCart from '@/composables/useCart.ts'
 
 const [isOpen, toggle] = useToggle()
+
+const {cartItems, removeItem} = useCart()
+
+const handleClickCart = (id: number) => {
+  removeItem(id)
+}
+
 </script>
 
 <template>
@@ -19,7 +28,26 @@ const [isOpen, toggle] = useToggle()
           </div>
         </div>
         <div class="flex text-gray-400 items-center gap-4 underline">
-          <BaseDrawer v-model="isOpen"> Drawer </BaseDrawer>
+          <BaseDrawer v-model="isOpen">
+            <template #title>
+              <p class="text-2xl">Your cart</p>
+            </template>
+            <template #default>
+              <div v-if="cartItems.length" class="flex flex-col gap-4">
+                <ProductCard
+                  v-for="product in cartItems"
+                  :key="product.id"
+                  :product="product"
+                  is-in-cart
+                  @click-cart="handleClickCart(product.id)"
+                />
+              </div>
+              <p v-else>Your cart is empty :(</p>
+            </template>
+            <template #footer>
+              <p>footer</p>
+            </template>
+          </BaseDrawer>
           <button @click="toggle()">Cart</button>
           <RouterLink to="/favorite">Favorite</RouterLink>
           <RouterLink to="/profile">Profile</RouterLink>
