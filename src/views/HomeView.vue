@@ -11,8 +11,9 @@ import type { SearchProductsParams } from '@/api/products/searchProducts.ts'
 import type { Product, WithRequired } from '@/types'
 import ProductGrid from '@/components/product/ProductGrid.vue'
 import ProductLargeSlider from '@/components/product/ProductLargeSlider.vue'
-import useFavoriteProducts from '@/composables/useFavoriteProducts.ts'
-import useCart from '@/composables/useCart.ts'
+import { useCartStore } from '@/store/cart.ts'
+import { storeToRefs } from 'pinia'
+import { useFavoriteProductsStore } from '@/store/favoriteProducts.ts'
 
 const sortByOptions = [
   {
@@ -36,8 +37,14 @@ const orderOptions = [
   },
 ]
 
-const { favoriteProducts, addFavorite, removeFavorite } = useFavoriteProducts()
-const { cartItems, addItem, removeItem } = useCart()
+const favoriteProductsStore = useFavoriteProductsStore()
+const { addFavorite, removeFavorite } = favoriteProductsStore
+const { favoriteProducts } = storeToRefs(favoriteProductsStore)
+
+const cartStore = useCartStore()
+const { addItem, removeItem } = cartStore
+const { cartItems } = storeToRefs(cartStore)
+
 const { state, isLoading, execute } = useAsyncState(searchProducts, null, { immediate: false })
 const { state: sliderProductsState, isLoading: sliderProductsIsLoading } = useAsyncState(
   () => searchProducts({ q: 'Shirt', limit: 5 }),
@@ -60,11 +67,13 @@ const hasPreviousPage = computed(() => searchParams.skip !== 0)
 const productsWithFavorite = computed(() => {
   const favoriteProductsIds = new Set(favoriteProducts.value.map((product) => product.id))
   const cartItemsIds = new Set(cartItems.value.map((cartItem) => cartItem.id))
-  return state.value?.products.map((product) => ({
-    ...product,
-    isFavorite: favoriteProductsIds.has(product.id),
-    isInCart: cartItemsIds.has(product.id),
-  })) ?? []
+  return (
+    state.value?.products.map((product) => ({
+      ...product,
+      isFavorite: favoriteProductsIds.has(product.id),
+      isInCart: cartItemsIds.has(product.id),
+    })) ?? []
+  )
 })
 
 const handleNextPage = () => {

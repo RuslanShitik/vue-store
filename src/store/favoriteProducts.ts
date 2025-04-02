@@ -1,9 +1,12 @@
+import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import type { Product } from '@/types'
 
-export default () => {
+export const useFavoriteProductsStore = defineStore('favoriteProducts', () => {
+  const localStorageKey = 'favorite_products'
+
   const favoriteProducts = ref<Product[]>(
-    JSON.parse(localStorage.getItem('favorite_products') ?? 'null') ?? [],
+    JSON.parse(localStorage.getItem(localStorageKey) ?? 'null') ?? [],
   )
 
   const addFavorite = (product: Product) => {
@@ -15,8 +18,7 @@ export default () => {
   }
 
   watch(favoriteProducts, (newValue) => {
-    console.log('newValue', newValue)
-    localStorage.setItem('favorite_products', JSON.stringify(newValue))
+    localStorage.setItem(localStorageKey, JSON.stringify(newValue))
   })
 
   return {
@@ -24,6 +26,4 @@ export default () => {
     addFavorite,
     removeFavorite,
   }
-}
-
-// TODO: refactor to PINIA
+})

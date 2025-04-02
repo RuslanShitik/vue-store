@@ -2,16 +2,18 @@
 import BaseDrawer from '@/components/UI/BaseDrawer.vue'
 import { useToggle } from '@vueuse/core'
 import ProductCard from '@/components/product/ProductCard.vue'
-import useCart from '@/composables/useCart.ts'
+import { useCartStore } from '@/store/cart.ts'
+import { storeToRefs } from 'pinia'
 
 const [isOpen, toggle] = useToggle()
 
-const {cartItems, removeItem} = useCart()
+const store = useCartStore()
+const { removeItem } = store
+const { cartItems } = storeToRefs(store)
 
 const handleClickCart = (id: number) => {
   removeItem(id)
 }
-
 </script>
 
 <template>
