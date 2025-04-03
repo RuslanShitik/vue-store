@@ -15,6 +15,7 @@ import { useCartStore } from '@/store/cart.ts'
 import { storeToRefs } from 'pinia'
 import { useFavoriteProductsStore } from '@/store/favoriteProducts.ts'
 import debounce from '@/utils/debounce.ts'
+import usePageTitle from '@/composables/usePageTitle.ts'
 
 const sortByOptions = [
   {
@@ -37,6 +38,8 @@ const orderOptions = [
     value: 'desc',
   },
 ]
+
+usePageTitle('Home')
 
 const favoriteProductsStore = useFavoriteProductsStore()
 const { addFavorite, removeFavorite } = favoriteProductsStore
